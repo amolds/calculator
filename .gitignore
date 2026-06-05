@@ -1,0 +1,16 @@
+# Bison outputs
+calc.tab.c
+calc.tab.h
+
+# Flex outputs
+lex.yy.c
+lex.yy.h
+
+# Build artifacts
+calc
+*.o
+
+# Editor/OS noise
+*.swp
+*.swo
+.DS_Store
