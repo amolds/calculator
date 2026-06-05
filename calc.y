@@ -81,12 +81,26 @@ line:
         {
             if (strcmp($1, ":symbols") == 0 ||
                 strcmp($1, ":vars") == 0 ||
-                strcmp($1, ":dump") == 0)
-            {
+                strcmp($1, ":dump") == 0) {
                 printf("Symbols:\n");
                 for (int i = 0; i < var_count; i++) {
                     printf("  %s = %d\n", vars[i].name, vars[i].value);
                 }
+            }
+            else if (strcmp($1, ":reset") == 0) {
+                var_count = 0;
+                printf("All variables cleared.\n");
+            }
+            else if (strcmp($1, ":help") == 0) {
+                printf("Available commands:\n");
+                printf("  :symbols   Show all variables\n");
+                printf("  :reset     Clear all variables\n");
+                printf("  :help      Show this help message\n");
+                printf("  :quit      Exit the interpreter\n");
+                printf("\n");
+                printf("Expressions:\n");
+                printf("  Supports +, -, *, /, parentheses, unary minus\n");
+                printf("  Variables can be assigned with:  name = expr\n");
             }
             else if (strcmp($1, ":quit") == 0) {
                 exit(0);

@@ -544,10 +544,10 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_int8 yyrline[] =
+static const yytype_uint8 yyrline[] =
 {
-       0,    72,    72,    74,    80,    98,   103,   104,   105,   109,
-     110,   111,   115,   116,   117,   118
+       0,    72,    72,    74,    80,   112,   117,   118,   119,   123,
+     124,   125,   129,   130,   131,   132
 };
 #endif
 
@@ -1139,12 +1139,26 @@ yyreduce:
         {
             if (strcmp((yyvsp[-1].id), ":symbols") == 0 ||
                 strcmp((yyvsp[-1].id), ":vars") == 0 ||
-                strcmp((yyvsp[-1].id), ":dump") == 0)
-            {
+                strcmp((yyvsp[-1].id), ":dump") == 0) {
                 printf("Symbols:\n");
                 for (int i = 0; i < var_count; i++) {
                     printf("  %s = %d\n", vars[i].name, vars[i].value);
                 }
+            }
+            else if (strcmp((yyvsp[-1].id), ":reset") == 0) {
+                var_count = 0;
+                printf("All variables cleared.\n");
+            }
+            else if (strcmp((yyvsp[-1].id), ":help") == 0) {
+                printf("Available commands:\n");
+                printf("  :symbols   Show all variables\n");
+                printf("  :reset     Clear all variables\n");
+                printf("  :help      Show this help message\n");
+                printf("  :quit      Exit the interpreter\n");
+                printf("\n");
+                printf("Expressions:\n");
+                printf("  Supports +, -, *, /, parentheses, unary minus\n");
+                printf("  Variables can be assigned with:  name = expr\n");
             }
             else if (strcmp((yyvsp[-1].id), ":quit") == 0) {
                 exit(0);
@@ -1153,59 +1167,59 @@ yyreduce:
                 printf("Unknown command: %s\n", (yyvsp[-1].id));
             }
         }
-#line 1157 "calc.tab.c"
+#line 1171 "calc.tab.c"
     break;
 
   case 5: /* line: EOL  */
-#line 99 "calc.y"
+#line 113 "calc.y"
         { /* blank line */ }
-#line 1163 "calc.tab.c"
+#line 1177 "calc.tab.c"
     break;
 
   case 6: /* expr: expr PLUS term  */
-#line 103 "calc.y"
+#line 117 "calc.y"
                                { (yyval.num) = (yyvsp[-2].num) + (yyvsp[0].num); }
-#line 1169 "calc.tab.c"
+#line 1183 "calc.tab.c"
     break;
 
   case 7: /* expr: expr MINUS term  */
-#line 104 "calc.y"
+#line 118 "calc.y"
                                { (yyval.num) = (yyvsp[-2].num) - (yyvsp[0].num); }
-#line 1175 "calc.tab.c"
+#line 1189 "calc.tab.c"
     break;
 
   case 9: /* term: term TIMES factor  */
-#line 109 "calc.y"
+#line 123 "calc.y"
                                { (yyval.num) = (yyvsp[-2].num) * (yyvsp[0].num); }
-#line 1181 "calc.tab.c"
+#line 1195 "calc.tab.c"
     break;
 
   case 10: /* term: term DIVIDE factor  */
-#line 110 "calc.y"
+#line 124 "calc.y"
                                { (yyval.num) = (yyvsp[-2].num) / (yyvsp[0].num); }
-#line 1187 "calc.tab.c"
+#line 1201 "calc.tab.c"
     break;
 
   case 12: /* factor: MINUS factor  */
-#line 115 "calc.y"
+#line 129 "calc.y"
                                 { (yyval.num) = -(yyvsp[0].num); }
-#line 1193 "calc.tab.c"
+#line 1207 "calc.tab.c"
     break;
 
   case 13: /* factor: LPAREN expr RPAREN  */
-#line 116 "calc.y"
+#line 130 "calc.y"
                                 { (yyval.num) = (yyvsp[-1].num); }
-#line 1199 "calc.tab.c"
+#line 1213 "calc.tab.c"
     break;
 
   case 14: /* factor: NUMBER  */
-#line 117 "calc.y"
+#line 131 "calc.y"
                                 { (yyval.num) = (yyvsp[0].num); }
-#line 1205 "calc.tab.c"
+#line 1219 "calc.tab.c"
     break;
 
   case 15: /* factor: IDENT  */
-#line 119 "calc.y"
+#line 133 "calc.y"
         {
             Var *v = find_var((yyvsp[0].id));
             if (!v) {
@@ -1215,11 +1229,11 @@ yyreduce:
                 (yyval.num) = v->value;
             }
         }
-#line 1219 "calc.tab.c"
+#line 1233 "calc.tab.c"
     break;
 
 
-#line 1223 "calc.tab.c"
+#line 1237 "calc.tab.c"
 
       default: break;
     }
@@ -1412,7 +1426,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 130 "calc.y"
+#line 144 "calc.y"
 
 
 int main() {
