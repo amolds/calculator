@@ -17,6 +17,8 @@ It’s intentionally small, readable, and hackable — perfect for learning or e
 - **Parentheses** for grouping  
 - **Custom REPL commands**, including:  
   - `:symbols` — list all variables and their values  
+  - `:store` <file> — save all variables to a file
+  - `:load` <file> — loads all variables from a file
   - `:quit` — exit the interpreter  
 
 ---
@@ -92,7 +94,7 @@ Symbols:
 ## Extending the Interpreter
 
 This project is designed to be extended.  
-Some natural next steps:
+Some natural next steps:ac
 
 - Add `:help` and `:reset` commands  
 - Add string variables  
