@@ -78,7 +78,7 @@
 
     typedef struct {
         char *name;
-        int   value;
+        double value;
     } Var;
 
     #define MAX_VARS 256
@@ -1120,7 +1120,7 @@ yyreduce:
     {
   case 2: /* line: expr EOL  */
 #line 73 "calc.y"
-        { printf("=%d\n", (yyvsp[-1].num)); }
+        { printf("=%g\n", (yyvsp[-1].num)); }
 #line 1125 "calc.tab.c"
     break;
 
@@ -1129,7 +1129,7 @@ yyreduce:
         {
             Var *v = get_or_create_var((yyvsp[-3].id));
             v->value = (yyvsp[-1].num);
-            printf("=%d\n", (yyvsp[-1].num));
+            printf("=%g\n", (yyvsp[-1].num));
         }
 #line 1135 "calc.tab.c"
     break;
@@ -1142,7 +1142,7 @@ yyreduce:
                 strcmp((yyvsp[-1].id), ":dump") == 0) {
                 printf("Symbols:\n");
                 for (int i = 0; i < var_count; i++) {
-                    printf("  %s = %d\n", vars[i].name, vars[i].value);
+                    printf("  %s = %g\n", vars[i].name, vars[i].value);
                 }
             }
             else if (strcmp((yyvsp[-1].id), ":reset") == 0) {

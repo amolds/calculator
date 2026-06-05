@@ -76,7 +76,7 @@ union YYSTYPE
 {
 #line 46 "calc.y"
 
-    int num;
+    double num;
     char *id;
 
 #line 83 "calc.tab.h"

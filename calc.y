@@ -8,7 +8,7 @@
 
     typedef struct {
         char *name;
-        int   value;
+        double value;
     } Var;
 
     #define MAX_VARS 256
@@ -44,7 +44,7 @@
 %}
 
 %union {
-    int num;
+    double num;
     char *id;
 }
 
@@ -70,12 +70,12 @@
 
 line:
       expr EOL                 
-        { printf("=%d\n", $1); }
+        { printf("=%g\n", $1); }
     | IDENT ASSIGN expr EOL    
         {
             Var *v = get_or_create_var($1);
             v->value = $3;
-            printf("=%d\n", $3);
+            printf("=%g\n", $3);
         }
     | COMMAND EOL
         {
@@ -84,7 +84,7 @@ line:
                 strcmp($1, ":dump") == 0) {
                 printf("Symbols:\n");
                 for (int i = 0; i < var_count; i++) {
-                    printf("  %s = %d\n", vars[i].name, vars[i].value);
+                    printf("  %s = %g\n", vars[i].name, vars[i].value);
                 }
             }
             else if (strcmp($1, ":reset") == 0) {
