@@ -95,6 +95,8 @@ line:
                 printf("Available commands:\n");
                 printf("  :symbols   Show all variables\n");
                 printf("  :reset     Clear all variables\n");
+                printf("  :store <file>   Save variables to a file\n");
+                printf("  :load <file>    Load variables from a file\n");
                 printf("  :help      Show this help message\n");
                 printf("  :quit      Exit the interpreter\n");
                 printf("\n");
@@ -107,6 +109,37 @@ line:
             }
             else {
                 printf("Unknown command: %s\n", $1);
+            }
+        }
+    | COMMAND IDENT EOL 
+        {
+            if (strcmp($1, ":store") == 0) {
+                FILE *f = fopen($2, "w");
+                if (!f) {
+                    printf("Error: cannot open %s for writing\n", $2);
+                } else {
+                    for (int i = 0; i < var_count; i++) {
+                        fprintf(f, "%s %g\n", vars[i].name, vars[i].value);
+                    }
+                    fclose(f);
+                    printf("Stored %d variables to %s\n", var_count, $2);
+                }
+            }
+            else if (strcmp($1, ":load") == 0) {
+                FILE *f = fopen($2, "r");
+                if (!f) {
+                    printf("Error: cannot open %s for reading\n", $2);
+                } else {
+                    var_count = 0;  // clear existing vars
+                    char name[256];
+                    double value;
+                    while (fscanf(f, "%255s %lf", name, &value) == 2) {
+                        Var *v = get_or_create_var(name);
+                        v->value = value;
+                    }
+                    fclose(f);
+                    printf("Loaded %d variables from %s\n", var_count, $2);
+                }
             }
         }
     | EOL
