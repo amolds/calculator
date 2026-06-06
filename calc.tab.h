@@ -65,7 +65,8 @@ extern int yydebug;
     RPAREN = 266,                  /* RPAREN  */
     EOL = 267,                     /* EOL  */
     ASSIGN = 268,                  /* ASSIGN  */
-    UMINUS = 269                   /* UMINUS  */
+    COMMA = 269,                   /* COMMA  */
+    UMINUS = 270                   /* UMINUS  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -74,12 +75,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 46 "calc.y"
+#line 15 "calc.y"
 
     double num;
     char *id;
+    struct ArgList *list;
 
-#line 83 "calc.tab.h"
+#line 85 "calc.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
