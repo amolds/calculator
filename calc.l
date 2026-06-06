@@ -19,6 +19,7 @@
 "/"                         { return DIVIDE; }
 "("                         { return LPAREN; }
 ")"                         { return RPAREN; }
+","                         { return COMMA; }
 
 .                           { }
 

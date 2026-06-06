@@ -46,6 +46,38 @@ double call_builtin_multi(const char *name, ArgList *args) {
         return pow(args->value, args->next->value);
     }
 
+    /* min(x, y, ...) */
+    if (strcmp(name, "min") == 0) {
+        if (count < 1) {
+            printf("Error: min() requires at least 1 argument\n");
+            return 0;
+        }
+        double m = args->value;
+        for (ArgList *p = args->next; p; p = p->next)
+            if (p->value < m) m = p->value;
+        return m;
+    }
+
+    /* max(x, y, ...) */
+    if (strcmp(name, "max") == 0) {
+        if (count < 1) {
+            printf("Error: max() requires at least 1 argument\n");
+            return 0;
+        }
+        double m = args->value;
+        for (ArgList *p = args->next; p; p = p->next)
+            if (p->value > m) m = p->value;
+        return m;
+    }
+
+    /* sum(x, y, ...) */
+    if (strcmp(name, "sum") == 0) {
+        double s = 0;
+        for (ArgList *p = args; p; p = p->next)
+            s += p->value;
+        return s;
+    }
+
     printf("Error: unknown multi‑argument function '%s'\n", name);
     return 0;
 }
