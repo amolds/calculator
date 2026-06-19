@@ -1,7 +1,9 @@
+/* arglist.h */
+
 #ifndef ARGLIST_H
 #define ARGLIST_H
 
-#include <stdlib.h>   // <-- REQUIRED for malloc()
+#include <stdlib.h>
 
 typedef struct ArgList {
     double value;

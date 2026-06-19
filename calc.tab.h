@@ -44,6 +44,14 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 18 "calc.y"
+
+    #include "ast.h"
+    #include "arglist.h"
+    #include "paramlist.h"    
+
+#line 55 "calc.tab.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -66,7 +74,8 @@ extern int yydebug;
     EOL = 267,                     /* EOL  */
     ASSIGN = 268,                  /* ASSIGN  */
     COMMA = 269,                   /* COMMA  */
-    UMINUS = 270                   /* UMINUS  */
+    DEF = 270,                     /* DEF  */
+    UMINUS = 271                   /* UMINUS  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -75,13 +84,16 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 15 "calc.y"
+#line 24 "calc.y"
 
     double num;
     char *id;
-    struct ArgList *list;
+    ArgList *list;
+    ParamList *plist;
+    Ast *ast;
+    ArgListAst *alist;
 
-#line 85 "calc.tab.h"
+#line 97 "calc.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

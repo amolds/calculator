@@ -1,9 +1,11 @@
+# Makefile
+
 CC = gcc
 CFLAGS = -Wall -Wextra -O2 -Wno-unused-function
 LEX = flex
 YACC = bison
 
-OBJS = calc.tab.o lex.yy.o symtab.o builtins.o commands.o repl.o
+OBJS = calc.tab.o lex.yy.o symtab.o builtins.o commands.o repl.o functab.o ast.o
 
 all: calc
 
@@ -13,7 +15,7 @@ calc: $(OBJS)
 calc.tab.c calc.tab.h: calc.y
 	$(YACC) -d calc.y
 
-lex.yy.c lex.yy.h: calc.l
+lex.yy.c lex.yy.h: calc.l calc.tab.h
 	$(LEX) --header-file=lex.yy.h calc.l
 
 symtab.o: symtab.c symtab.h
@@ -28,7 +30,13 @@ commands.o: commands.c commands.h symtab.h
 repl.o: repl.c symtab.h
 	$(CC) $(CFLAGS) -c repl.c
 
-calc.tab.o: calc.tab.c symtab.h builtins.h commands.h
+functab.o: functab.c functab.h paramlist.h
+	$(CC) $(CFLAGS) -c functab.c
+
+ast.o: ast.c ast.h
+	$(CC) $(CFLAGS) -c ast.c
+
+calc.tab.o: calc.tab.c symtab.h builtins.h commands.h functab.h paramlist.h arglist.h
 	$(CC) $(CFLAGS) -c calc.tab.c
 
 lex.yy.o: lex.yy.c calc.tab.h

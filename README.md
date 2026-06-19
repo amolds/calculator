@@ -103,3 +103,9 @@ Some natural next steps:ac
 - Add error recovery  
 
 ---
+
+## Assemble source into .txt
+
+cat Makefile *.c *.h *.y *.l > code.txt
+
+---

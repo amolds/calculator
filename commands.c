@@ -1,3 +1,5 @@
+/* commands.c */
+
 #include "commands.h"
 #include "symtab.h"
 #include <stdio.h>

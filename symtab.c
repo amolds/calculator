@@ -1,3 +1,5 @@
+/* symtab.c */
+
 #define _GNU_SOURCE
 #define _USE_MATH_DEFINES
 
@@ -8,6 +10,8 @@
 #include <math.h>
 
 #define MAX_VARS 256
+
+double last_result = 0;
 
 static Var vars[MAX_VARS];
 static int var_count = 0;

@@ -1,7 +1,11 @@
+/* symtab.h */
+
 #ifndef SYMTAB_H
 #define SYMTAB_H
 
-#include <stdio.h>   // <-- REQUIRED for FILE*
+#include <stdio.h>
+
+extern double last_result;
 
 typedef struct {
     char *name;
