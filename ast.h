@@ -3,6 +3,8 @@
 #ifndef AST_H
 #define AST_H
 
+#include <stdio.h>
+
 typedef enum {
     AST_NUM,
     AST_VAR,
@@ -42,5 +44,7 @@ Ast *ast_call(char *name, ArgListAst *args);
 ArgListAst *arglist_ast_prepend(Ast *e, ArgListAst *rest);
 
 double eval_ast(Ast *node);
+
+void ast_print(Ast *node, FILE *out);
 
 #endif

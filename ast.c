@@ -94,3 +94,35 @@ static double eval_ast_internal(Ast *node) {
 double eval_ast(Ast *node) {
     return eval_ast_internal(node);
 }
+
+void ast_print(Ast *node, FILE *out) {
+    switch (node->kind) {
+        case AST_NUM:
+            fprintf(out, "%g", node->u.num);
+            break;
+
+        case AST_VAR:
+            fprintf(out, "%s", node->u.var);
+            break;
+
+        case AST_BINOP:
+            fprintf(out, "(");
+            ast_print(node->u.bin.left, out);
+            fprintf(out, " %c ", node->u.bin.op);
+            ast_print(node->u.bin.right, out);
+            fprintf(out, ")");
+            break;
+
+        case AST_CALL: {
+            fprintf(out, "%s(", node->u.call.name);
+            ArgListAst *a = node->u.call.args;
+            while (a) {
+                ast_print(a->expr, out);
+                if (a->next) fprintf(out, ", ");
+                a = a->next;
+            }
+            fprintf(out, ")");
+            break;
+        }
+    }
+}
